@@ -41,7 +41,7 @@
             this.btnMine.Size = new System.Drawing.Size(30, 30);
             this.btnMine.TabIndex = 0;
             this.btnMine.UseVisualStyleBackColor = false;
-            this.btnMine.Click += new System.EventHandler(this.btnMine_Click);
+            //this.btnMine.Click += new System.EventHandler(this.btnMine_Click);
             // 
             // lblMine
             // 

@@ -17,20 +17,36 @@ namespace MinesweeperV1
         private int clickCount;
         private string[,] mineLyt;
         private List<ucBtnMine> lsMines = new List<ucBtnMine>();
+        private bool firstClick;
         public Minesweeper()
         {
             sizeRow = 9;
             sizeCol = 9;
             numMines = 10;
             InitializeComponent();
-            shuffleMine();
             setMines();
         }
         #region Creating Matrix with Mines
-        private string[,] shuffleMine()
+        private void shuffleMine(ucBtnMine mine)
         {
             string[,] mineLayout = new string[sizeRow,sizeCol];
-
+            TableLayoutPanel tblPanel = pnlMain.Controls[0] as TableLayoutPanel;
+            int mineCol = tblPanel.GetColumn(mine);
+            int mineRow = tblPanel.GetRow(mine);
+            List<MinePosition> lsFirstClick = new List<MinePosition>();
+            for (int i = mineRow - 1; i <= mineRow + 1; i++)
+            {
+                if (i >= 0 && i < sizeRow)
+                {
+                    for (int j = mineCol - 1; j <= mineCol + 1; j++)
+                    {
+                        if (j >= 0 && j < sizeCol)
+                        {
+                            lsFirstClick.Add(new MinePosition(i, j));
+                        }
+                    }
+                }
+            }
             int row, col;
             int x = 0;
             List<MinePosition> lsMinePos = new List<MinePosition>();
@@ -40,7 +56,7 @@ namespace MinesweeperV1
             {
                 row = rand.Next(sizeRow);
                 col = rand.Next(sizeCol);
-                if (mineLayout[row, col] == null)
+                if (mineLayout[row, col] == null && !lsFirstClick.Contains(new MinePosition(row,col)))
                 {
                     lsMinePos.Add(minePos = new MinePosition(row, col));
                     mineLayout[row, col] = "X";
@@ -49,101 +65,23 @@ namespace MinesweeperV1
             }
             foreach (MinePosition item in lsMinePos)
             {
-                bool top, bottom, right, left;
-                top = bottom = right = left = true;
-                if (item.col != 0)
+                for (int i = item.row - 1; i <= item.row + 1; i++)
                 {
-                    if (mineLayout[item.row, item.col - 1] == null)
+                    if (i >= 0 && i < sizeRow)
                     {
-                        mineLayout[item.row, item.col - 1] = "1";
-                    }
-                    else if (mineLayout[item.row, item.col - 1] != "X")
-                    {
-                        mineLayout[item.row, item.col - 1] = (int.Parse(mineLayout[item.row, item.col - 1]) + 1).ToString();
-                    }
-                }
-                else { top = false; }
-                if (item.row != 0)
-                {
-                    if (mineLayout[item.row - 1, item.col] == null)
-                    {
-                        mineLayout[item.row - 1, item.col] = "1";
-                    }
-                    else if (mineLayout[item.row - 1, item.col] != "X")
-                    {
-                        mineLayout[item.row - 1, item.col] = (int.Parse(mineLayout[item.row - 1, item.col]) + 1).ToString();
-                    }
-                }
-                else { left = false; }
-                if (item.col < sizeCol - 1)
-                {
-                    if (mineLayout[item.row, item.col + 1] == null)
-                    {
-                        mineLayout[item.row, item.col + 1] = "1";
-                    }
-                    else if (mineLayout[item.row, item.col + 1] != "X")
-                    {
-                        mineLayout[item.row, item.col + 1] = (int.Parse(mineLayout[item.row, item.col + 1]) + 1).ToString();
-                    }
-                }
-                else { bottom = false; }
-                if (item.row < sizeRow - 1)
-                {
-                    if (mineLayout[item.row + 1, item.col] == null)
-                    {
-                        mineLayout[item.row + 1, item.col] = "1";
-                    }
-                    else if (mineLayout[item.row + 1, item.col] != "X")
-                    {
-                        mineLayout[item.row + 1, item.col] = (int.Parse(mineLayout[item.row + 1, item.col]) + 1).ToString();
-                    }
-                }
-                else { right = false; }
-                if (top && left)
-                {
-                    if (mineLayout[item.row - 1, item.col - 1] == null)
-                    {
-                        mineLayout[item.row - 1, item.col - 1] = "1";
-                    }
-                    else if (mineLayout[item.row - 1, item.col - 1] != "X")
-                    {
-                        mineLayout[item.row - 1, item.col - 1] = (int.Parse(mineLayout[item.row - 1, item.col - 1]) + 1).ToString();
-                    }
-                }
-                if (top && right)
-                {
-                    if (mineLayout[item.row + 1, item.col - 1] == null)
-                    {
-                        mineLayout[item.row + 1, item.col - 1] = "1";
-                    }
-                    else if (mineLayout[item.row + 1, item.col - 1] != "X")
-                    {
-                        mineLayout[item.row + 1, item.col - 1] = (int.Parse(mineLayout[item.row + 1, item.col - 1]) + 1).ToString();
-                    }
-                }
-                if (bottom && left)
-                {
-                    if (mineLayout[item.row - 1, item.col + 1] == null)
-                    {
-                        mineLayout[item.row - 1, item.col + 1] = "1";
-                    }
-                    else if (mineLayout[item.row - 1, item.col + 1] != "X")
-                    {
-                        mineLayout[item.row - 1, item.col + 1] = (int.Parse(mineLayout[item.row - 1, item.col + 1]) + 1).ToString();
-                    }
-                }
-                if (bottom && right)
-                {
-                    if (mineLayout[item.row + 1, item.col + 1] == null)
-                    {
-                        mineLayout[item.row + 1, item.col + 1] = "1";
-                    }
-                    else if (mineLayout[item.row + 1, item.col + 1] != "X")
-                    {
-                        mineLayout[item.row + 1, item.col + 1] = (int.Parse(mineLayout[item.row + 1, item.col + 1]) + 1).ToString();
+                        for (int j = item.col - 1; j <= item.col + 1; j++)
+                        {
+                            if (j >= 0 && j < sizeCol)
+                            {
+                                string posText = mineLayout[i, j];
+                                mineLayout[i, j] = posText == null ? "1" : posText != "X" ? (int.Parse(posText) + 1).ToString() : posText;
+
+                            }
+                        }
                     }
                 }
             }
+        
             for (int i = 0; i < sizeRow; i++ )
             {
                 for (int j = 0; j< sizeCol; j++)
@@ -152,9 +90,10 @@ namespace MinesweeperV1
                     {
                         mineLayout[i, j] = " ";
                     }
+                    mine = tblPanel.GetControlFromPosition(j, i) as ucBtnMine;
+                    mine.setBtn(mineLayout[i, j]);
                 }
             }
-                return mineLayout;
             
         }
         #endregion
@@ -174,7 +113,7 @@ namespace MinesweeperV1
             TableLayoutPanel tblPanel = new TableLayoutPanel();
             this.AutoSize = true;
             tblPanel.AutoSize = true;
-            mineLyt = shuffleMine();
+            //mineLyt = shuffleMine();
             for (int i = 0; i < sizeRow; i++)
             {
 
@@ -183,15 +122,16 @@ namespace MinesweeperV1
                 {
                     tblPanel.ColumnStyles.Add(new ColumnStyle(System.Windows.Forms.SizeType.Absolute, 25F));
                     ucBtnMine mine = new ucBtnMine();
-                    mine.setBtn(mineLyt[i,j]);
+                    //mine.setBtn(mineLyt[i,j]);
                     mine.Click += new EventHandler(clickedMinefield);
                     mine.Dock = DockStyle.Fill;
                     tblPanel.Controls.Add(mine, j, i);
                     
-                    if (mine.mineSet)
-                    {
-                        lsMines.Add(mine);
-                    }                }
+                    //if (mine.mineSet)
+                    //{
+                    //    lsMines.Add(mine);
+                    //}                
+                }
             }
             if (pnlMain.Controls.Count > 0)
             {
@@ -208,85 +148,134 @@ namespace MinesweeperV1
             {
                 timerGame.Enabled = true;
             }
-
-            if (mine.clkState)
+            Console.WriteLine(mine.mouseClickID);
+            if (firstClick)
             {
-                mine.clickedMine();
-                clickCount--;
-                Console.WriteLine("Clicked.");
-                if (mine.mineSet)
-                {
-                    resultDisp(false);
-                    foreach (ucBtnMine item in lsMines)
-                    {
-                        item.clickedMine();
-                    }
-                    pnlMain.Enabled = false;
-                } 
-                else if (clickCount == 0)
-                {
-                    //win condition function
-                    resultDisp(true);
-                }
-                else if (mine.mineTxt == " ")
-                {
-                    checkAdjacent(mine);
-                }
+                firstClick = false;
+                shuffleMine(mine);
+                mine.mouseClickID = -1;
             }
+            if (mine.mouseClickID == -1)
+            {
+                if (mine.clkState)
+                {
+                    mine.clickedMine();
+                    if (mine.mineFlag)
+                    {
+                        lblMines.Text = (int.Parse(lblMines.Text) + 1).ToString(); 
+                    }
+                    clickCount--;
+                    Console.WriteLine("Clicked.");
+                    if (mine.mineSet)
+                    {
+                        foreach (ucBtnMine item in lsMines)
+                        {
+                            item.clickedMine();
+                        }
+                        resultDisp(false);
+                        pnlMain.Enabled = false;
+                    }
+                    else if (clickCount == 0)
+                    {
+                        //win condition function
+                        resultDisp(true);
+                    }
+                    else if (mine.mineTxt == " ")
+                    {
+                        checkAdjacent(mine);
+                    }
+                }
+                mine.mouseClickID = 0;
+            }
+            else if (mine.mouseClickID == 1)
+            {
+                if (!mine.mineFlag && int.Parse(lblMines.Text) > 0)
+                {
+                    mine.toggleFlag();
+                    lblMines.Text = (int.Parse(lblMines.Text) - 1).ToString();
+                }
+                else if(mine.mineFlag && int.Parse(lblMines.Text) <= numMines)
+                {
+                    mine.toggleFlag();
+                    lblMines.Text = (int.Parse(lblMines.Text) + 1).ToString(); 
+                }
+                mine.mouseClickID = 0;
+            }
+            else if (mine.mouseClickID == 5)
+            {
+
+                openAdjacent(mine);
+                mine.mouseClickID = 0;
+            }
+            
             
         }
 
+        #region Check Functions
+        private void openAdjacent(ucBtnMine midMine)
+        {
+            TableLayoutPanel tblPanel = pnlMain.Controls[0] as TableLayoutPanel;
+            int mineCol = tblPanel.GetColumn(midMine);
+            int mineRow = tblPanel.GetRow(midMine);
+
+            for (int i = mineRow - 1; i <= mineRow + 1; i++)
+            {
+                if (i >= 0 && i < sizeRow)
+                {
+                    for (int j = mineCol - 1; j <= mineCol + 1; j++)
+                    {
+                        if (j >= 0 && j < sizeCol)
+                        {
+                            ucBtnMine btn = tblPanel.GetControlFromPosition(j, i) as ucBtnMine;
+                            if (btn.clkState && !btn.mineFlag)
+                            {
+                                btn.clickedMine();
+                                clickCount--;
+                                if (btn.mineSet)
+                                {
+                                    foreach (ucBtnMine item in lsMines)
+                                    {
+                                        item.clickedMine();
+                                    }
+                                    resultDisp(false);
+                                    pnlMain.Enabled = false;
+                                }
+                                else if (clickCount == 0)
+                                {
+                                    resultDisp(true);
+                                }
+                                else if (btn.mineTxt == " ")
+                                {
+                                    checkAdjacent(btn);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
         private void checkAdjacent(ucBtnMine midMine)
         {
-            bool top, left, right, bottom;
-            top = left = right = bottom = true;
+            
             Console.WriteLine("Checking..");
             TableLayoutPanel tblPanel = pnlMain.Controls[0] as TableLayoutPanel;
             int mineCol = tblPanel.GetColumn(midMine);
             int mineRow = tblPanel.GetRow(midMine);
-            // Check mine upwards
-            if (mineCol > 0)
+            
+            for (int i = mineRow - 1; i <= mineRow + 1; i++)
             {
-                checkEmpty(tblPanel.GetControlFromPosition(mineCol - 1, mineRow) as ucBtnMine);
+                if (i >= 0 && i < sizeRow)
+                {
+                    for (int j = mineCol - 1; j <= mineCol + 1; j++)
+                    {
+                        if (j >= 0 && j < sizeCol)
+                        {
+                            checkEmpty(tblPanel.GetControlFromPosition(j, i) as ucBtnMine);
+                        }
+                    }
+                }
             }
-            else { top = false; }
-            // Check mine downwards
-            if (mineCol < sizeCol - 1)
-            {
-                checkEmpty(tblPanel.GetControlFromPosition(mineCol + 1, mineRow) as ucBtnMine);
-            }
-            else { bottom = false; }
-            // Check mine on left
-            if (mineRow > 0)
-            {
-                checkEmpty(tblPanel.GetControlFromPosition(mineCol, mineRow - 1) as ucBtnMine);
-            }
-            else { left = false; }
-            // Check mine right
-            if (mineRow < sizeRow - 1)
-            {
-                checkEmpty(tblPanel.GetControlFromPosition(mineCol, mineRow + 1) as ucBtnMine);
-            }
-            else { right = false; }
-
-            if (top && right)
-            {
-                checkEmpty(tblPanel.GetControlFromPosition(mineCol - 1, mineRow + 1) as ucBtnMine);
-            }
-            if (top && left)
-            {
-                checkEmpty(tblPanel.GetControlFromPosition(mineCol - 1, mineRow - 1) as ucBtnMine);
-            }
-            if (bottom && left)
-            {
-                checkEmpty(tblPanel.GetControlFromPosition(mineCol + 1, mineRow - 1) as ucBtnMine);
-            }
-            if (bottom && right)
-            {
-                checkEmpty(tblPanel.GetControlFromPosition(mineCol + 1, mineRow + 1) as ucBtnMine);
-            }
-            Console.WriteLine(mineCol);
-            Console.WriteLine(mineRow);
+           
         }
 
         private void checkEmpty(ucBtnMine mine)
@@ -305,6 +294,7 @@ namespace MinesweeperV1
                 }
             }
         }
+        #endregion
 
         #region Fn to Reset the Game, reshuffling mines
         private void resetMine()
@@ -314,26 +304,22 @@ namespace MinesweeperV1
             {
                 lsMines.Clear();
             }
-
+            lblMines.Text = numMines.ToString();
             clickCount = (sizeRow * sizeCol) - numMines;
             pnlMain.Enabled = true;
             TableLayoutPanel tblPanel = pnlMain.Controls[0] as TableLayoutPanel;
-            mineLyt = shuffleMine();
             for (int i = 0; i<sizeRow;i++)
             {
                 for (int j = 0; j<sizeCol; j++){
                     ucBtnMine mine = tblPanel.GetControlFromPosition(j, i) as ucBtnMine;
-                    mine.setBtn(mineLyt[i, j]);
-                    if (mine.mineSet)
-                    {
-                        lsMines.Add(mine);
-                    }
+                    mine.resetMine();
                 }
-               
             }
+            firstClick = false;
         }
         #endregion
 
+        #region Control functions to call forms
         private void btnReset_Click(object sender, EventArgs e)
         {
             resetMine();
@@ -358,6 +344,9 @@ namespace MinesweeperV1
             }
         }
 
+        #endregion
+
+        #region Timer Control Functions
         private void timerGame_Tick(object sender, EventArgs e)
         {
             lblTimer.Text = (int.Parse(lblTimer.Text) + 1).ToString();
@@ -368,5 +357,7 @@ namespace MinesweeperV1
             timerGame.Enabled = false;
             lblTimer.Text = "000";
         }
+        #endregion
+
     }
 }

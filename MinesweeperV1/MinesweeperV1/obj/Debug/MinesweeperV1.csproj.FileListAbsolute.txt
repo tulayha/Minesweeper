@@ -10,3 +10,19 @@ G:\Talha\Dev projects\Visual Studio 2013\MinesweeperV1\MinesweeperV1\obj\Debug\M
 G:\Talha\Dev projects\Visual Studio 2013\MinesweeperV1\MinesweeperV1\obj\Debug\MinesweeperV1.csprojResolveAssemblyReference.cache
 G:\Talha\Dev projects\Visual Studio 2013\MinesweeperV1\MinesweeperV1\obj\Debug\MinesweeperV1.FormDificulty.resources
 G:\Talha\Dev projects\Visual Studio 2013\MinesweeperV1\MinesweeperV1\obj\Debug\MinesweeperV1.ResultForm.resources
+C:\Users\talha.amjad\Documents\Visual Studio 2013\Projects\Minesweeper-main\MinesweeperV1\MinesweeperV1\bin\Debug\MinesweeperV1.exe.config
+C:\Users\talha.amjad\Documents\Visual Studio 2013\Projects\Minesweeper-main\MinesweeperV1\MinesweeperV1\obj\Debug\MinesweeperV1.exe
+C:\Users\talha.amjad\Documents\Visual Studio 2013\Projects\Minesweeper-main\MinesweeperV1\MinesweeperV1\obj\Debug\MinesweeperV1.pdb
+C:\Users\talha.amjad\Documents\Visual Studio 2013\Projects\Minesweeper-main\MinesweeperV1\MinesweeperV1\bin\Debug\MinesweeperV1.exe
+C:\Users\talha.amjad\Documents\Visual Studio 2013\Projects\Minesweeper-main\MinesweeperV1\MinesweeperV1\bin\Debug\MinesweeperV1.pdb
+C:\Users\talha.amjad\Documents\Visual Studio 2013\Projects\Minesweeper-main\MinesweeperV1\MinesweeperV1\obj\Debug\MinesweeperV1.csprojResolveAssemblyReference.cache
+C:\Users\talha.amjad\Documents\Visual Studio 2013\Projects\Minesweeper-main\MinesweeperV1\MinesweeperV1\obj\Debug\MinesweeperV1.Minesweeper.resources
+C:\Users\talha.amjad\Documents\Visual Studio 2013\Projects\Minesweeper-main\MinesweeperV1\MinesweeperV1\obj\Debug\MinesweeperV1.FormDificulty.resources
+C:\Users\talha.amjad\Documents\Visual Studio 2013\Projects\Minesweeper-main\MinesweeperV1\MinesweeperV1\obj\Debug\MinesweeperV1.Properties.Resources.resources
+C:\Users\talha.amjad\Documents\Visual Studio 2013\Projects\Minesweeper-main\MinesweeperV1\MinesweeperV1\obj\Debug\MinesweeperV1.ResultForm.resources
+C:\Users\talha.amjad\Documents\Visual Studio 2013\Projects\Minesweeper-main\MinesweeperV1\MinesweeperV1\obj\Debug\MinesweeperV1.ucBtnMine.resources
+C:\Users\talha.amjad\Documents\Visual Studio 2013\Projects\Minesweeper-main\MinesweeperV1\MinesweeperV1\obj\Debug\MinesweeperV1.csproj.GenerateResource.Cache
+C:\Users\talha.amjad\Documents\Visual Studio 2013\Projects\Minesweeper-main\MinesweeperV1\MinesweeperV1\bin\Debug\MinesweeperV1.exe.manifest
+C:\Users\talha.amjad\Documents\Visual Studio 2013\Projects\Minesweeper-main\MinesweeperV1\MinesweeperV1\bin\Debug\MinesweeperV1.application
+C:\Users\talha.amjad\Documents\Visual Studio 2013\Projects\Minesweeper-main\MinesweeperV1\MinesweeperV1\obj\Debug\MinesweeperV1.exe.manifest
+C:\Users\talha.amjad\Documents\Visual Studio 2013\Projects\Minesweeper-main\MinesweeperV1\MinesweeperV1\obj\Debug\MinesweeperV1.application

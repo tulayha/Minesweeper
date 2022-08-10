@@ -13,26 +13,31 @@ namespace MinesweeperV1
     public partial class ucBtnMine : UserControl
     {
         public bool mineSet;
-        public bool clkState;
+        public bool clkState, mineFlag;
         public string mineTxt;
+        public int mouseClickID = 0;
 
         #region Initialize User Control: ucBtnMine
         public ucBtnMine()
         {
             InitializeComponent();
+            mineFlag = false;
+            btnMine.MouseDown += new MouseEventHandler(btnMine_MouseDown);
+            btnMine.BackgroundImageLayout = ImageLayout.Zoom;
+            lblMine.Click += lblMine_Click;
          }
+
+        protected void lblMine_Click(object sender, EventArgs e)
+        {
+            mouseClickID = 5;
+            this.InvokeOnClick(this, EventArgs.Empty);
+        }
         #endregion
 
         #region Set/Reset ucBtnMine
         public void setBtn(string mineData)
         {
-            clkState = true;
-            if (!btnMine.Visible)
-            {
-                btnMine.Visible = true;
-            }
-            mineSet = false;
-            lblMine.BackColor = System.Drawing.SystemColors.Control;
+            resetMine();
             switch (mineData)
             {
                 case "X":
@@ -75,15 +80,50 @@ namespace MinesweeperV1
 
         #region Functions for this userControl
 
-        private void btnMine_Click(object sender, EventArgs e)
+        public void resetMine()
         {
-            this.InvokeOnClick(this, EventArgs.Empty);
-            clickedMine();
+            lblMine.Enabled = false;
+            clkState = true;
+            mineFlag = false;
+            btnMine.BackgroundImage = null;
+            if (!btnMine.Visible)
+            {
+                btnMine.Visible = true;
+            }
+            mineSet = false;
+            lblMine.BackColor = System.Drawing.SystemColors.Control;
         }
-        #endregion
+        protected void btnMine_MouseDown(object sender, MouseEventArgs e)
+        {
+            
+            switch (e.Button)
+            {
+                case MouseButtons.Left:
+                   // mineFlag = false;
+                    mouseClickID = -1;
+                    //clickedMine();
+                    this.InvokeOnClick(this, EventArgs.Empty);
+                    break;
+                case MouseButtons.Right:
+                    mouseClickID = 1;
+                    this.InvokeOnClick(this, EventArgs.Empty);
+                    break;
+                default:
+                    break;
+            }
+        }
 
+        #endregion
+        public void toggleFlag()
+        {
+            mineFlag = !mineFlag;
+            btnMine.BackgroundImage = mineFlag ? MinesweeperV1.Properties.Resources.Flag_red: null;
+            //btnMine.BackColor = mineFlag ? System.Drawing.Color.Red : System.Drawing.SystemColors.ControlDark;
+                    
+        }
         public void clickedMine()
         {
+            lblMine.Enabled = true;
             clkState = false;
             btnMine.Visible = false;
         }
